@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="THE RESSEY TOURS AND CAR HIRE INSURANCE TRACKER API")
 
-# -------------------- CORS CONFIGURATION --------------------
+
 origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
@@ -20,10 +20,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-# -------------------- END CORS FIX --------------------
 
 
-# -------------------- Pydantic Schemas --------------------
 
 class BaseSchema(BaseModel):
     model_config = ConfigDict(from_attributes=True) 
@@ -102,7 +100,7 @@ def delete_car(car_id: int, db: Session = Depends(get_db)):
     db.commit()
     return
 
-# -------- User Login/Registration --------
+
 
 @app.post("/users", response_model=UserSchema)
 def create_user(user: UserSchema, db: Session = Depends(get_db)):
@@ -125,7 +123,7 @@ def login_user(user: UserSchema, db: Session = Depends(get_db)):
     
     return db_user
 
-# -------------------- STARTUP EVENT (The Final Fix) --------------------
+
 
 @app.on_event("startup")
 def create_admin_on_startup():
